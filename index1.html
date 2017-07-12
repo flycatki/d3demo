@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <style>
+
+    .active {
+      stroke: #000;
+      stroke-width: 2px;
+    }
+
+    .rect {
+      pointer-events: all;
+      stroke: none;
+      stroke-width: 40px;
+    }
+
+    body {
+      margin: 0;
+    }
+
+    #svgContainer {
+      margin-left: 100px;
+      margin-top: 50px;
+      border: solid 1px #939393;
+      width: 1000px;
+      height: 600px;
+
+    }
+
+  </style>
+</head>
+<body>
+<div id="svgContainer">
+
+</div>
+<script>
+
+
+  var margin = { top: 10, right: 10, bottom: 30, left: 10 },
+    width = 1000,
+    height = 600;
+
+
+  var iconScale = 0.2;
+  /*var rectangles = d3.range(10).map(function() {
+   return {
+   x: Math.round(Math.random() * (width)),
+   y: Math.round(Math.random() * (height))
+   };
+   });*/
+
+
+
+
+  var rectangles = d3.range(2).map(function() {
+    return {
+      x: 0,
+      y: 0
+    };
+  });
+
+
+  var color = d3.scaleOrdinal(d3.schemeCategory20);
+
+  var svg;
+  var viewboxX = -200;
+  var viewboxY = 0;
+  var iconContainerX = -170;
+  var iconContainerY = 10;
+
+  d3.xml("test.svg").mimeType("image/svg+xml").get(function (xml) {
+    document.body.querySelector("#svgContainer").appendChild(xml.documentElement);
+
+    var zoom = d3.zoom()
+      .scaleExtent([0.1, 0.8])
+      .on("end", zoomend)
+      .on("zoom", zoomed);
+
+    svg = d3.select('svg')
+      .attr("width", width)
+      .attr("height", height)
+      .attr("preserveAspectRatio", "xMinYMin meet")
+      .attr("viewBox", viewboxX + " " + viewboxY + " " + width + " " + height)
+      .call(zoom.transform, d3.zoomIdentity.translate(0, 0).scale(0.1, -0.1))
+      .call(zoom);
+
+    var locationimage;
+    var imagesvg = svg.select('g')
+      .attr("id", "oimage")
+      .attr("transform", function(d, i) {
+        locationimage = document.getElementById("oimage").getBBox();
+        return  "translate(" + -locationimage.x * 0.1 + "," + -locationimage.y * 0.1 + ") scale(0.1, 0.1)";
+      })
+      .attr("ox", -locationimage.x * 0.1)
+      .attr("oy", -locationimage.y * 0.1);
+
+    var dragbehavior = d3.drag()
+      .subject(function (d) {
+        var t = d3.select(this);
+        var ctm = document.getElementById(this.id).getCTM();
+        return {x: ctm.e + viewboxX, y: ctm.f + viewboxY};
+      })
+      .on("start", dragstarted)
+      .on("drag", dragged)
+      .on("end", dragended);
+
+    var group = svg.selectAll("g")
+      .data(rectangles)
+      .enter().append('g')
+      .attr("id", function(d, i) {
+        return  "icon" + i;
+      })
+      .attr("class", "icon")
+      .call(dragbehavior);
+
+    group.append("path")
+      .attr("d", "M156.831,70.804c0,13.473-10.904,24.396-24.357,24.396c-13.434,0-24.357-10.923-24.357-24.396" +
+        "c0-13.434,10.904-24.337,24.357-24.337C145.927,46.467,156.831,57.37,156.831,70.804z M203.298,70.795" +
+        "c0,8.764-1.661,17.098-4.563,24.836c-9.282,27.571-70.736,169.307-70.736,169.307S70.14,110.403,65.118,92.68" +
+        "c-2.237-6.868-3.478-14.196-3.478-21.866C61.64,31.743,93.354,0,132.474,0C171.593-0.01,203.307,31.733,203.298,70.795z" +
+        "M177.661,71.078c0-24.953-20.214-45.197-45.187-45.197c-24.953,0-45.177,20.234-45.177,45.187s20.224,45.187,45.177,45.187" +
+        "C157.446,116.255,177.661,96.031,177.661,71.078z")
+      .style("fill", function (d, i) {
+        return color(i);
+      })
+      .attr("id", function (d, i) {
+        return "location" + i;
+      });
+
+    group
+      .attr("transform", function(d, i) {
+        var location = document.getElementById("location" + i).getBBox();
+        var xoffset = (-location.x + d.x) * iconScale;
+        var yoffset = (-location.y + d.y) * iconScale;
+        return  "translate(" + xoffset + "," + yoffset + ") scale(" + iconScale + ")";
+      });
+
+
+    var iconContainer = svg.append("g");
+    iconContainer.append("rect")
+      .attr("width", "180px")
+      .attr("height", "580px")
+      .attr("x", "-190px")
+      .attr("y", "10px")
+      .style("fill", "white")
+      .style("stroke-width", "0.1")
+      .style("stroke", "rgb(0,0,0)");
+    iconContainer.append("path")
+      .attr("d", "M156.831,70.804c0,13.473-10.904,24.396-24.357,24.396c-13.434,0-24.357-10.923-24.357-24.396" +
+        "c0-13.434,10.904-24.337,24.357-24.337C145.927,46.467,156.831,57.37,156.831,70.804z M203.298,70.795" +
+        "c0,8.764-1.661,17.098-4.563,24.836c-9.282,27.571-70.736,169.307-70.736,169.307S70.14,110.403,65.118,92.68" +
+        "c-2.237-6.868-3.478-14.196-3.478-21.866C61.64,31.743,93.354,0,132.474,0C171.593-0.01,203.307,31.733,203.298,70.795z" +
+        "M177.661,71.078c0-24.953-20.214-45.197-45.187-45.197c-24.953,0-45.177,20.234-45.177,45.187s20.224,45.187,45.177,45.187" +
+        "C157.446,116.255,177.661,96.031,177.661,71.078z")
+      .attr("id", "tempIcon")
+      .style("fill", "pink")
+      .attr("transform", function(d, i) {
+        var ctm = document.getElementById(this.id).getCTM();
+        var bbox = document.getElementById(this.id).getBBox();
+        var xoffset = (ctm.e - bbox.x + viewboxX) * iconScale + iconContainerX;
+        var yoffset = (ctm.f - bbox.y + viewboxY) * iconScale + iconContainerY;
+        return  "translate(" + xoffset + "," + yoffset + ") scale(" + iconScale + ")";
+      });
+
+    function dragstarted(d) {
+      d3.select(this).raise().classed("active", true);
+    }
+
+    function dragged(d) {
+      d.x = d3.event.x;
+      d.y = d3.event.y;
+      d3.select(this)
+        .attr("transform", "translate(" + d.x + ", " + d.y + ") scale(" + iconScale + ")");
+    }
+
+    function dragended(d) {
+      d3.select(this).classed("active", false);
+    }
+
+    function zoomend() {
+    }
+
+    function zoomed() {
+
+      var ox = parseFloat(d3.select(this).select('g').attr("ox") || 0);
+      var oy = parseFloat(d3.select(this).select('g').attr("oy") || 0);
+      var x1 = d3.event.transform.x - ox;
+      var y1 = d3.event.transform.y - oy;
+      var k1 = parseFloat(d3.select(this).select('g').attr("ok"));
+      var point = d3.mouse(this);
+
+      d3.select(this).select('g')
+        .attr("ox", d3.event.transform.x)
+        .attr("oy", d3.event.transform.y)
+        .attr("ok", d3.event.transform.k)
+        .attr("transform", d3.event.transform);
+
+      d3.selectAll('.icon').each(function() {
+        var icon = document.getElementById(this.id);
+        var cx3 = x1 + icon.transform.baseVal[0].matrix.e;
+        var cy3 = y1 + icon.transform.baseVal[0].matrix.f;
+
+        if (d3.event.sourceEvent && d3.event.sourceEvent.type === "wheel") {
+
+          var iconRect = document.getElementById(this.id).getCTM();
+          var iconBox = document.getElementById(this.id).getBBox();
+
+          var cx = point[0];
+          var cy = point[1];
+          var cx1 = cx - (iconRect.e + viewboxX + iconBox.x * iconRect.a + iconBox.width * iconRect.a / 2);
+          var cy1 = cy - (iconRect.f + viewboxY + iconBox.y * iconRect.a + iconBox.height * iconRect.a);
+
+          var cx2 = cx1 - cx1 / k1 * d3.event.transform.k;
+          var cy2 = cy1 - cy1 / k1 * d3.event.transform.k;
+
+          cx3 = icon.transform.baseVal[0].matrix.e + cx2;
+          cy3 = icon.transform.baseVal[0].matrix.f + cy2;
+        }
+        d3.select(this)
+          .attr("transform", "translate(" + cx3 + ", " + cy3 + ") scale(" + iconScale + ")");
+      });
+    }
+  });
+
+
+
+</script>
+
+
+</body>
+</html>
