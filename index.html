@@ -72,16 +72,6 @@ var margin = { top: 10, right: 10, bottom: 30, left: 10 },
     width = 1200,
     height = 600;
 
-var iconPath = "M156.831,70.804c0,13.473-10.904,24.396-24.357,24.396c-13.434,0-24.357-10.923-24.357-24.396" +
-  "c0-13.434,10.904-24.337,24.357-24.337C145.927,46.467,156.831,57.37,156.831,70.804z M203.298,70.795" +
-  "c0,8.764-1.661,17.098-4.563,24.836c-9.282,27.571-70.736,169.307-70.736,169.307S70.14,110.403,65.118,92.68" +
-  "c-2.237-6.868-3.478-14.196-3.478-21.866C61.64,31.743,93.354,0,132.474,0C171.593-0.01,203.307,31.733,203.298,70.795z" +
-  "M177.661,71.078c0-24.953-20.214-45.197-45.187-45.197c-24.953,0-45.177,20.234-45.177,45.187s20.224,45.187,45.177,45.187" +
-  "C157.446,116.255,177.661,96.031,177.661,71.078z";
-
-var temperature = "<path d=\"M513.548387 589.419355c3.096774-5.16129 6.193548-9.806452 8.774194-14.967742 12.387097-21.16129 31.483871-30.451613 49.548387-28.387097-12.903226-21.16129-28.387097-40.774194-46.451613-58.83871-94.967742-94.967742-94.967742-247.741935 0-340.645161 13.935484-13.935484 13.935484-36.645161 0-52.129032-13.935484-13.935484-36.645161-13.935484-52.129032 0C413.419355 154.322581 381.419355 232.258065 381.419355 315.870968c0 84.129032 32 162.064516 91.870968 221.419355C489.290323 552.774194 502.709677 570.322581 513.548387 589.419355z\" p-id=\"1305\"></path>" +
-  "<path d=\"M173.419355 147.096774c13.935484-13.935484 13.935484-36.645161 0-52.129032-13.935484-13.935484-36.645161-13.935484-52.129032 0C61.419355 154.83871 29.419355 232.774194 29.419355 316.387097c0 83.612903 32 162.064516 91.870968 221.419355 46.451613 43.870968 70.709677 105.290323 70.709677 169.290323 0 64-24.258065 125.419355-70.193548 171.354839-13.935484 13.935484-13.935484 36.645161 0 52.129032 7.741935 7.741935 17.032258 10.83871 25.806452 10.83871s18.580645-3.096774 25.806452-10.83871c59.870968-59.870968 91.870968-137.806452 91.870968-221.419355 0-83.612903-32-162.064516-91.870968-221.419355C78.451613 392.774194 78.451613 240 173.419355 147.096774z\" p-id=\"1306\"></path>" +
-  "<path d=\"M903.225806 486.193548c-45.935484-45.935484-70.193548-105.290323-70.193548-171.354839 0-64 24.258065-125.419355 70.193548-171.354839 13.935484-13.935484 13.935484-36.645161 0-52.129032-13.935484-13.935484-36.645161-13.935484-52.129032 0-59.870968 59.870968-91.870968 137.806452-91.870968 221.419355 0 83.612903 32 162.064516 91.870968 221.419355 95.483871 96.516129 95.483871 249.290323 0.516129 342.709677-13.935484 13.935484-13.935484 36.645161 0 52.129032 7.741935 7.741935 17.032258 10.83871 25.806452 10.83871 9.290323 0 18.580645-3.096774 25.806452-10.83871 59.870968-59.870968 91.870968-137.806452 91.870968-221.419355C995.096774 624 963.096774 545.548387 903.225806 486.193548z\" p-id=\"1307\"></path><path d=\"M782.451613 881.032258c-55.225806-96-111.483871-191.483871-167.741935-286.967742-20.129032-34.064516-58.83871-34.064516-78.967742 0-58.322581 96.516129-115.612903 193.548387-173.419355 290.064516-7.741935 13.419355-13.935484 27.354839-5.677419 42.83871 8.774194 16 24.258065 16.516129 39.741935 16.516129l369.032258 0c15.483871-0.516129 27.354839-11.354839 26.322581-26.83871C791.225806 904.774194 788.645161 891.354839 782.451613 881.032258zM571.870968 890.83871c-15.483871 0-27.354839-11.870968-27.354839-27.354839 0-14.967742 11.870968-26.83871 27.354839-26.83871 16-0.516129 27.354839 11.354839 27.354839 26.83871S587.354839 890.83871 571.870968 890.83871zM600.258065 729.806452c0 17.548387 0 35.096774 0 53.16129 0 16.516129-11.870968 28.387097-27.354839 28.387097-14.967742 0-27.354839-12.387097-27.354839-28.903226 0-36.129032 0-72.258065 0-108.387097 0-16 11.870968-27.870968 26.83871-27.870968 14.967742 0 27.354839 12.387097 27.870968 28.387097C600.258065 692.645161 600.258065 711.225806 600.258065 729.806452z\" p-id=\"1308\"></path>";
 var iconScale = 0.05;
 var iconTemplate = 0.05;
 var imageScale = 0.1;
@@ -131,12 +121,14 @@ var rectangles = d3.range(2).map(function() {
 var color = d3.scaleOrdinal(d3.schemeCategory20);
 
 var iconCount = rectangles.length;
+var iconImage;
 
 var svg;
 var viewboxX = -200;
 var viewboxY = 0;
 var iconContainerX = -170;
 var iconContainerY = 30;
+var ctrlKey = false;
 
 d3.xml("test.svg").mimeType("image/svg+xml").get(function (xml) {
 
@@ -144,6 +136,24 @@ d3.xml("test.svg").mimeType("image/svg+xml").get(function (xml) {
     .scaleExtent([0.1, 0.8])
     .on("end", zoomend)
     .on("zoom", zoomed);
+
+  var dragbehavior = d3.drag()
+    .subject(function () {
+      var trans = document.getElementById(this.id);
+      return {x: trans.transform.baseVal[0].matrix.e, y: trans.transform.baseVal[0].matrix.f};
+    })
+    .on("start", dragstarted)
+    .on("drag", dragged)
+    .on("end", dragended);
+
+  var dragbehaviorTemplate = d3.drag()
+    .subject(function () {
+      var trans = document.getElementById(this.id);
+      return {x: trans.transform.baseVal[0].matrix.e, y: trans.transform.baseVal[0].matrix.f};
+    })
+    .on("start", dragstartedTemplate)
+    .on("drag", draggedTemplate)
+    .on("end", dragendedTemplate);
 
   var svgContainer = d3.select("#svgWrapper").append("svg")
     .attr("id", "svgContainer")
@@ -178,16 +188,9 @@ d3.xml("test.svg").mimeType("image/svg+xml").get(function (xml) {
       return  "translate(" + -imageGroup.x * imageScale + "," + -imageGroup.y * imageScale + ") scale(" + imageScale + ")";
     });
 
-  var dragbehavior = d3.drag()
-    .subject(function (d) {
-      var trans = document.getElementById(this.id);
-      return {x: trans.transform.baseVal[0].matrix.e, y: trans.transform.baseVal[0].matrix.f};
-    })
-    .on("start", dragstarted)
-    .on("drag", dragged)
-    .on("end", dragended);
+  loadImage(function (xml) {
 
-  d3.xml("location.svg").mimeType("image/svg+xml").get(function (xml) {
+    // draw icon on image
     oImage.selectAll("g.icon")
       .data(rectangles)
       .enter().append("g")
@@ -213,48 +216,19 @@ d3.xml("test.svg").mimeType("image/svg+xml").get(function (xml) {
         return "location" + i;
       })
       .call(dragbehavior);
-  });
 
+    // draw icon on toolbar
+    var iconContainer = svgContainer.append("g");
+    iconContainer.append("rect")
+      .attr("class", "template")
+      .attr("width", "200px")
+      .attr("height", "600px")
+      .attr("x", "-200px")
+      .attr("y", "0px")
+      .style("fill", "white")
+      .style("stroke-width", "0.1")
+      .style("stroke", "rgb(0,0,0)");
 
-  var dragbehaviorTemplate = d3.drag()
-    .subject(function (d) {
-      var trans = document.getElementById(this.id);
-      return {x: trans.transform.baseVal[0].matrix.e, y: trans.transform.baseVal[0].matrix.f};
-    })
-    .on("start", dragstartedTemplate)
-    .on("drag", draggedTemplate)
-    .on("end", dragendedTemplate);
-
-  var iconContainer = svgContainer.append("g");
-  iconContainer.append("rect")
-    .attr("class", "template")
-    .attr("width", "200px")
-    .attr("height", "600px")
-    .attr("x", "-200px")
-    .attr("y", "0px")
-    .style("fill", "white")
-    .style("stroke-width", "0.1")
-    .style("stroke", "rgb(0,0,0)");
-/*  svgContainer.selectAll("g.tempIconClass")
-    .data(templateIconArr)
-    .enter().append("g")
-    .attr("id", function(d, i) {
-      return "tempicon" + i;
-    })*/
-/*    .attr("transform", function(d, i) {
-      var ctm = document.getElementById(this.id).getCTM();
-      var bbox = document.getElementById(this.id).getBBox();
-      var xoffset = (ctm.e - bbox.x + viewboxX) * iconTemplate + iconContainerX;
-      var yoffset = (ctm.f - bbox.y + viewboxY) * iconTemplate + iconContainerY;
-      return  "translate(" + xoffset + "," + yoffset + ") scale(" + iconTemplate + ")";
-    })*/
-    //.attr("class", "tempIconClass");
-
-/*    .append("path")
-    .attr("d", iconPath)
-    .style("fill", "pink");*/
-
-  d3.xml("location.svg").mimeType("image/svg+xml").get(function (xml) {
     svgContainer
       .selectAll("g.tempIconClass")
       .data(templateIconArr)
@@ -271,11 +245,36 @@ d3.xml("test.svg").mimeType("image/svg+xml").get(function (xml) {
         var yoffset = (-bbox.y) * iconTemplate + d.y;
         return  "translate(" + xoffset + "," + yoffset + ") scale(" + iconTemplate + ")";
       });
+
+    svgContainer.selectAll("#tempicon1").call(dragbehaviorTemplate);
   });
 
-  svgContainer.selectAll("#tempicon1").call(dragbehaviorTemplate);
-
+  var dragStartTransform;
   function dragstarted(d) {
+    if (d3.event.sourceEvent.ctrlKey === true) {
+      ctrlKey = true;
+      dragStartTransform = document.getElementById(this.id).cloneNode(true);
+      var selectNode = d3.select(this).node();
+      oImage.append("g")
+        .html(selectNode.innerHTML)
+        .attr("id", function() {
+          rectangles.push({
+            x: 0,
+            y: 0,
+            path: "icon",
+            iconIndex: 0
+          });
+
+          return "location" + rectangles.length;
+        })
+        .style("fill", selectNode.style.fill)
+        .attr("class", "icon")
+        .attr("transform", function() {
+          return  "translate(" + selectNode.transform.baseVal.consolidate().matrix.e + "," +
+            selectNode.transform.baseVal.consolidate().matrix.f + ") scale(" + iconScale + ")";
+        })
+        .call(dragbehavior);
+    }
     d3.select(this).raise().classed("active", true);
   }
 
@@ -285,13 +284,19 @@ d3.xml("test.svg").mimeType("image/svg+xml").get(function (xml) {
   }
 
   function dragended(d) {
+    if (d3.event.sourceEvent.ctrlKey === true && ctrlKey === true) {
+      panCtrl(this);
+    } else if (d3.event.sourceEvent.ctrlKey === false && ctrlKey === true) {
+
+    }
+
+    ctrlKey = false;
     d3.select(this).classed("active", false);
   }
 
-  var dragStartTransform;
   function dragstartedTemplate(d) {
     d3.select(this).raise().classed("active", true);
-    dragStartTransform = document.getElementById(this.id).cloneNode(true)
+    dragStartTransform = document.getElementById(this.id).cloneNode(true);
   }
 
   function draggedTemplate(d) {
@@ -312,6 +317,9 @@ d3.xml("test.svg").mimeType("image/svg+xml").get(function (xml) {
     var inImage = inPosition(node);
     if (inImage) {
       oImage.append("g")
+        .html(function () {
+             return node.innerHTML;
+        })
         .attr("id", function() {
           iconCount += 1;
           return "icon" + iconCount;
@@ -322,17 +330,10 @@ d3.xml("test.svg").mimeType("image/svg+xml").get(function (xml) {
           return  "translate(" + node.transform.baseVal.consolidate().matrix.e + "," +
             node.transform.baseVal.consolidate().matrix.f + ") scale(" + iconScale + ")";
         })
-        .append("path")
-        .attr("d", iconPath)
-        .style("fill", "red")
-        .attr("id", function() {
-          return "location" + iconCount;
-        });
-      var iconScreenCtm = document.getElementById(node.id).getScreenCTM();
-      var iconCtm = document.getElementById(node.id).getCTM();
+        .style("fill", "red");
+
       var iconBox = document.getElementById(node.id).getBBox();
       var eventDrag = d3.event.sourceEvent;
-      var mousePoint = d3.mouse(node);
       var calculateLeft;
       var calculateTop;
 
@@ -387,6 +388,66 @@ d3.xml("test.svg").mimeType("image/svg+xml").get(function (xml) {
     }
   }
 
+  function panCtrl(node) {
+    var translateStr = "translate(" +
+      dragStartTransform.transform.baseVal.consolidate().matrix.e + "," +
+      dragStartTransform.transform.baseVal.consolidate().matrix.f + ")" +
+      "scale(" + iconTemplate + ")";
+    var inImage = inPosition(node);
+    if (inImage) {
+      var iconBox = document.getElementById(node.id).getBBox();
+      var eventDrag = d3.event.sourceEvent;
+      var calculateLeft;
+      var calculateTop;
+
+      if (window.innerWidth - eventDrag.clientX - iconBox.width * iconScale > informationDiv.width &&
+        eventDrag.clientY < informationDiv.height + 50) {
+        calculateLeft = eventDrag.clientX + iconBox.width * iconScale;
+        calculateTop = eventDrag.clientY;
+        d3.select(".informationWrapper")
+          .style("left", calculateLeft + "px")
+          .style("top", calculateTop + "px");
+        d3.select("#information")
+          .style("display", "block")
+          .style("left", 0)
+          .style("top", 0)
+          .transition()
+          .duration(1000)
+          .style("height", "300px")
+          .style("width", "200px");
+      } else if (window.innerWidth - eventDrag.clientX - iconBox.width * iconScale > informationDiv.width &&
+        eventDrag.clientY > informationDiv.height + 50) {
+        calculateLeft = eventDrag.clientX + iconBox.width * iconScale;
+        calculateTop = eventDrag.clientY - 400;
+        d3.select(".informationWrapper")
+          .style("left", calculateLeft + "px")
+          .style("top", calculateTop + "px");
+        d3.select("#information")
+          .style("display", "block")
+          .style("left", 0)
+          .style("bottom", 0)
+          .transition()
+          .duration(1000)
+          .style("height", "300px")
+          .style("width", "200px");
+      }
+
+      d3.select("#information .close")
+        .transition()
+        .duration(1000)
+        .style("opacity", 1.0);
+
+    } else {
+      d3.select(node)
+        .style("pointer-events", "none")
+        .transition()
+        .ease(d3.easeSin)
+        .duration(1000)
+        .attr("transform", translateStr)
+        .style("pointer-events", "");
+    }
+  }
+
   function inPosition(node) {
     var imageC = document.getElementById("imageContainer").getCTM();
     var imageBox = document.getElementById("imageContainer").getBBox();
@@ -394,7 +455,7 @@ d3.xml("test.svg").mimeType("image/svg+xml").get(function (xml) {
     var nodeBox = document.getElementById(node.id).getBBox();
 
     return imageC.e <= nodeC.e &&
-      imageBox.y + imageBox.height >= nodeBox.y + nodeBox.height;
+      imageBox.y + imageBox.height >= nodeBox.y + nodeBox.height * iconTemplate;
   }
 
   function zoomend() {
@@ -455,7 +516,17 @@ function closeInformation() {
     .on("end", function () {
       d3.select("#information").style("display", "none");
     });
+}
 
+function loadImage(cb) {
+  if (iconImage) {
+    cb(iconImage)
+  } else {
+    d3.xml("location.svg").mimeType("image/svg+xml").get(function (xml) {
+      iconImage = xml;
+      cb(iconImage)
+    });
+  }
 }
 
 </script>
